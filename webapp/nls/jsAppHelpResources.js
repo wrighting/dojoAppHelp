@@ -2,31 +2,24 @@ define({
   root: {
 	  'default': {},
 	  templateContext: {
-		  organismshort: '<i>P. falciparum</i>',
-		  Partnerstudies: 'partner studies'
+              boilerPlateText: 'Lorem ipsum'
 	  },
-	  variants: {
+	  help1: {
 		  title: 'Help',
 		  shortText: 'Short Text',
-		  
 		  bitmap : {
-			  src: 'Bitmaps/datagrid2.png',
-			  alt: 'datagrid'
+			  src: 'images/helpimage.png',
+			  alt: 'helpimage'
 		  },
 		  helpDoc : {
-			  dtlTemplate: "Help/dtl_Help1.htm"
+			  dtlTemplate: "helpText/dtl_help1.html"
 		  }			  
 	  },
-	  samples: {
+	  help2: {
 		  title: 'Help',
 		  shortText: 'Short Text Sample',
-		  
-		  bitmap : {
-			  src: 'Bitmaps/datagrid2.png',
-			  alt: 'datagrid'
-		  },
 		  helpDoc : {
-			  href: "Help/Help.htm"
+			  href: "helpText/help.html"
 		  }			  
 	  },
 	  faq: {

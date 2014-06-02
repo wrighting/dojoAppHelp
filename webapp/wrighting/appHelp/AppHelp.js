@@ -65,33 +65,23 @@ define([ "dojo/_base/declare", "dojo/_base/kernel", "dojo/_base/lang", "dojo/_ba
 		     return dest;
 		},
 		buildResource: function(reference, resource) {
+                        //A default set of values that will be applied, unless overridden to all resources
+                        //Can also add bitmaps etc here or define in the default section of the resources file
 			var myresources = {
 					title: null, //If defined creates a titled pane
 					shortText: '',
-					cssClass: 'DQXIntroInfo',
+					cssClass: 'appHelpInfoPane',
 					cssStyle: '',
-					bitmap : {
-						src: 'Bitmaps/datagrid2.png',
-						style: 'float:left;margin-left:0px;margin-top:5px;margin-right:5px;margin-bottom:5px;',
-						alt: 'info'
-					},
 					helpDoc : {
 						href: null,
 						dtlTemplate: null,
-						cssImgClass: 'DQXHelpLink DQXIntroBoxHelpLink',
-						cssTextClass: 'DQXHelpLink',
+						cssImgClass: 'appHelpLink appHelpImg',
+						cssTextClass: 'appHelpLink',
 						linkText : ' More information...',
 						dialogcssClass: '',
 						dialogcssStyle: 'width: 50%;',
-						bitmap : {
-							src: 'Bitmaps/info4.png',
-							style: 'float:left;margin-right:2px;border:0;',
-							alt: 'Help'
-						},
 					}	  
 				  };
-			// call jquery
-			//$.extend(true, obj1, obj2);
 			this.mixinDeep(myresources, helpResources['default']);
 			this.mixinDeep(myresources, resource);
 			
@@ -128,7 +118,6 @@ define([ "dojo/_base/declare", "dojo/_base/kernel", "dojo/_base/lang", "dojo/_ba
 			this.resource = this.items[this.reference];
 		},
 		mergeItems: function (dbItems) {
-			console.log("merging:" + this.service + ":" + this.widgetNumber);
 			this.items = {};
 			for (var item in helpResources) {
 				this.items[item] = this.buildResource(item, helpResources[item]);
@@ -154,12 +143,10 @@ define([ "dojo/_base/declare", "dojo/_base/kernel", "dojo/_base/lang", "dojo/_ba
 				store = self.statics.stores[self.service].mem;
 				var data = store.query({});
 				if (data.length == 0) {
-					console.log("subscribing:" + self.service + ":" + self.statics.stores[self.service].event);
 					self.statics.stores[self.service].dependencies.push(self);
 				//first call hasn't returned yet
 					topic.subscribe(self.statics.stores[self.service].event, self.fetchCachedItems);
 				} else {
-					console.log("merging");
 					while((dep = self.statics.stores[self.service].dependencies.pop())) {
 						dep.mergeItems(data);
 					}

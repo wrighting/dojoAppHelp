@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<script>dojoConfig = {
+                async: true, 
+                dojoBlankHtmlUrl: '/blank.html',
+                parseOnLoad: false,
+                
+                tlmSiblingOfDojo: false,
+                
+                packages: [
+                      { name: "help", location: location.pathname.replace(/\/[^/]+$/, '') + '/wrighting/appHelp' },
+                      { name: "nls", location: location.pathname.replace(/\/[^/]+$/, '') + '/nls' },
+                      { name: "helpText", location: location.pathname.replace(/\/[^/]+$/, '') + '/helpText' },
+                      { name: "images", location: location.pathname.replace(/\/[^/]+$/, '') + '/images' },
+                 ]
+}</script>
+<script 
+    src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js"></script>
+<link rel="stylesheet"
+        href="css/jsAppHelp.css">
+<link rel="stylesheet"
+        href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css">
+<style type="text/css">
+#gridDiv {
+        height: 60em;
+}
+
+</style>
+<script> require(['dojo/_base/lang', 'dojo/on', "dojo/dom", 'dojo/parser', 
+                  "dijit/layout/BorderContainer","dijit/layout/ContentPane",
+                  "help/InfoPane","help/HelpIndex","help/FAQIndex",
+                  'dojo/domReady!'],
+  function(lang, on, dom, parser, BorderContainer, ContentPane,
+                  InfoPane, HelpIndex){
+
+     parser.parse();
+
+     optionsWidth = "320px";
+     this.appLayout = new BorderContainer({
+  			  id: "container",
+  			  design: "headline"
+  		  }, "appLayout");
+     this.headerPane = new ContentPane({
+    	        region: "top",
+    	        id: "top",
+	    	    "class": "edgePanel",
+	    	    content: "header",
+	    	        // href:
+	    	    });
+  		  
+     this.headerPane.setContent('<div id="header">Some header text</div>');
+     this.headerPane.addChild(new HelpIndex( { label: 'MyHelp&nbsp;'}));
+     this.headerPane.addChild(new FAQIndex( { service: 'help/service.php'}));
+     this.headerPane.startup();
+     this.appLayout.addChild(this.headerPane);
+  	    
+
+     this.mainPane = new ContentPane({ 
+  	    	region: "center",
+                splitter: true,
+  	    	id: "main"
+  		  });
+     var mainContainer = new BorderContainer({
+                          id: "mainContainer",
+                          splitter: true,
+                          design: "headline"
+                  });
+     var leftPane = new ContentPane({
+                region: "left",
+                style: "width: " + optionsWidth,
+                        splitter: true,
+                id: "left"
+                  });
+     var rightPane = new ContentPane({
+                region: "center",
+                splitter: true,
+                style: "height: 100%",
+                id: "right"
+                  });
+
+     leftPane.addChild(new InfoPane( {
+                 reference: "help1"
+      }));
+
+     mainContainer.addChild(leftPane);
+     mainContainer.addChild(rightPane);
+     mainContainer.startup();
+     this.mainPane.addChild(mainContainer);
+
+     this.appLayout.addChild(this.mainPane);
+
+     this.appLayout.startup();
+
+});
+</script>
+</head>
+<body class="claro">
+
+        <div id="appLayout">
+                <div id="gridDiv"></div>
+
+        </div>
+
+</body>
+</html>
+
